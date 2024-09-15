@@ -37,7 +37,7 @@ userauth:
     #    jwtExpirationMs: '10000'
     jwtExpirationMailMs: "1200000"
     jwtCookieName: userauth
-    jwtSecret: MY_SECRET_JWT_TOKEN_@@@
+    jwtSecret: nfk29kd1z2CWdRkYEUnw2rVPwOv6CogZnfk29kd1z2CWdRkYEUnw2rVPwOv6CogZnfk29WdRkYEUnw2rV1z2CWdRkYEUnw2rVPwOv6Co
   #    urlFront: ${URL_FRONT:https://192.168.15.112:4205/}
 
 server:
