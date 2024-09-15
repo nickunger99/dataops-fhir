@@ -21,7 +21,7 @@ public class Patient {
     private String name;
     private String cpf;
     private String gender;
-    private String  dateOfBirth;
+    private String dateOfBirth;
     private String tel;
     private String country;
     private String observation;
