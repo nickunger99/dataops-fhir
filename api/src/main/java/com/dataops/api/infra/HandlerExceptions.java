@@ -24,55 +24,55 @@ public class HandlerExceptions {
 
     @ExceptionHandler(EntityNotFoundException.class)
 
-    public ResponseEntity tratarErro404() {
+    public ResponseEntity Error404() {
         return ResponseEntity.notFound().build();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity tratarErro400(MethodArgumentNotValidException ex) {
+    public ResponseEntity Error400(MethodArgumentNotValidException ex) {
         var erros = ex.getFieldErrors();
         logger.error(erros.toString());
-        return ResponseEntity.badRequest().body(erros.stream().map(DadosErroValidacao::new).toList());
+        return ResponseEntity.badRequest().body(erros.stream().map(ValidationError::new).toList());
     }
 
     @ExceptionHandler(ValidatorException.class)
-    public ResponseEntity tratarErro400(ValidatorException ex) {
+    public ResponseEntity Error400(ValidatorException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity tratarErro400(HttpMessageNotReadableException ex) {
+    public ResponseEntity Error400(HttpMessageNotReadableException ex) {
         logger.error(ex.getMessage());
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity tratarErroBadCredentials() {
-        logger.warn("Credenciais inválidas");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse("Credenciais inválidas"));
+    public ResponseEntity ErrorBadCredentials() {
+        logger.warn("Bad Credentials");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse("Bad Credentials"));
     }
 
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity tratarErroAuthentication() {
-        logger.warn("Falha na autenticação");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse("Falha na autenticação"));
+    public ResponseEntity ErrorAuthentication() {
+        logger.warn("Authentication Failure");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse("Authentication Failure"));
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity tratarErroAcessoNegado() {
-        logger.warn("Acesso negado");
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new MessageResponse("Acesso negado"));
+    public ResponseEntity ErrorAccessDenied() {
+        logger.warn("Access denied");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new MessageResponse("Access denied"));
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity tratarErro500(Exception ex) {
+    public ResponseEntity Error500(Exception ex) {
         logger.error(ex.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " + ex.getLocalizedMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + ex.getLocalizedMessage());
     }
 
-    private record DadosErroValidacao(String campo, String mensagem) {
-        public DadosErroValidacao(FieldError erro) {
-            this(erro.getField(), erro.getDefaultMessage());
+    private record ValidationError(String field, String message) {
+        public ValidationError(FieldError error) {
+            this(error.getField(), error.getDefaultMessage());
         }
     }
 }

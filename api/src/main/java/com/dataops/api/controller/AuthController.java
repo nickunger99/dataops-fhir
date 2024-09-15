@@ -55,13 +55,13 @@ public class AuthController {
 
         Optional<User> userOptional = userService.findByUsername(loginRequest.getUsername());
         if (userOptional.isEmpty()) {
-            logger.warn("Usuário: " + loginRequest.getUsername() + " não encontrado");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("Usuário não encontrado"));
+            logger.warn("User: " + loginRequest.getUsername() + " not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("User not found"));
         }
 
         if (userOptional.get().getStatus() != StatusUser.ATIVO) {
-            logger.warn("Usuário: " + loginRequest.getUsername() + " inativo");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse("Usuário inativo, contate o administrador do sistema."));
+            logger.warn("User: " + loginRequest.getUsername() + " inactive");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse("inactive user, please contact your system administrator"));
         }
 
         Authentication authentication = authenticationManager.authenticate(
@@ -89,19 +89,19 @@ public class AuthController {
     // @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public ResponseEntity registerUser(@Valid @RequestBody RegisterUser signUpRequest) {
         if (userService.existsByUsername(signUpRequest.getUsername())) {
-            logger.warn("Usuário: " + signUpRequest.getUsername() + " em uso");
-            return ResponseEntity.badRequest().body(new MessageResponse("Usuário está em uso"));
+            logger.warn("User: " + signUpRequest.getUsername() + " in use");
+            return ResponseEntity.badRequest().body(new MessageResponse("User is in use"));
         }
 
         if (userService.existsByEmail(signUpRequest.getEmail())) {
-            logger.warn("Usuário: " + signUpRequest.getEmail() + " em uso");
-            return ResponseEntity.badRequest().body(new MessageResponse("Email já cadastrado"));
+            logger.warn("E-mail: " + signUpRequest.getEmail() + " in use");
+            return ResponseEntity.badRequest().body(new MessageResponse("E-mail is in use"));
         }
 
         String passEncode = encoder.encode(signUpRequest.getPassword());
         User user = userService.registerUser(signUpRequest, passEncode);
         userService.save(user);
-        return ResponseEntity.ok(new MessageResponse("Usuário: " + user.getName() + " registrado com sucesso!"));
+        return ResponseEntity.ok(new MessageResponse("User: " + user.getName() + " successfully registered"));
     }
 
     @PostMapping("/signout")
@@ -110,6 +110,6 @@ public class AuthController {
         ResponseCookie jwtCookie = jwtUtils.getCleanJwtCookie();
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .body(new MessageResponse("Deslogado com sucesso"));
+                .body(new MessageResponse("Logout successfully"));
     }
 }
