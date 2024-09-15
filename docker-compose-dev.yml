@@ -1,0 +1,37 @@
+name: dataops-fhir
+
+
+services:
+  fhir:
+    container_name: hapi_fhir
+    image: hapiproject/hapi:v7.4.0
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_URL=jdbc:postgresql://postgres:5432/hapi
+      - DB_USERNAME=admin
+      - DB_PASSWORD=admin
+    configs:
+      - source: hapi
+        target: /app/config/application.yaml
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16.2
+    restart: always
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: hapi
+      POSTGRES_MULTIPLE_DATABASES: dataops
+    ports:
+      - "5434:5432"
+    volumes:
+      - /var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+
+configs:
+  hapi:
+    file: ./hapi.application.yaml
