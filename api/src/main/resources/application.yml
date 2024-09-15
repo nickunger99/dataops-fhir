@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: DATAOPS_API
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5434/dataops}
+    username: ${DB_USERNAME:admin}
+    password: ${DB_PASSWORD:admin}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      data-source-properties:
+        applicationName: DATAOPS_API
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: "true"
+        format_sql: "true"
+    hibernate:
+      ddl-auto: update
+  #    show-sql: 'true'
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+
+springdoc:
+  packagesToScan: com.dataops.api
+  #  writer-with-order-by-keys: true
+  swagger-ui:
+    defaultModelsExpandDepth: "-1"
+    path: "/swagger-ui/"
+
+userauth:
+  app:
+    jwtExpirationMs: "86400000"
+    #    jwtExpirationMs: '10000'
+    jwtExpirationMailMs: "1200000"
+    jwtCookieName: userauth
+    jwtSecret: MY_SECRET_JWT_TOKEN_@@@
+  #    urlFront: ${URL_FRONT:https://192.168.15.112:4205/}
+
+server:
+  forward-headers-strategy: framework
+  port: ${SERVER_PORT:8085}
