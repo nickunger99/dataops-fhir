@@ -29,7 +29,7 @@ springdoc:
   #  writer-with-order-by-keys: true
   swagger-ui:
     defaultModelsExpandDepth: "-1"
-    path: "/swagger-ui/"
+    path: "/docs"
 
 userauth:
   app:
