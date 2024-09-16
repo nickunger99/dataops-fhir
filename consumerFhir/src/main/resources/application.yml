@@ -25,21 +25,12 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
 
 springdoc:
-  packagesToScan: com.dataops.api
+  packagesToScan: com.dataops.consumerFhir
   #  writer-with-order-by-keys: true
   swagger-ui:
     defaultModelsExpandDepth: "-1"
     path: "/docs"
 
-userauth:
-  app:
-    jwtExpirationMs: "86400000"
-    #    jwtExpirationMs: '10000'
-    jwtExpirationMailMs: "1200000"
-    jwtCookieName: userauth
-    jwtSecret: nfk29kd1z2CWdRkYEUnw2rVPwOv6CogZnfk29kd1z2CWdRkYEUnw2rVPwOv6CogZnfk29WdRkYEUnw2rV1z2CWdRkYEUnw2rVPwOv6Co
-
-
 server:
   forward-headers-strategy: framework
-  port: ${SERVER_PORT:8090}
+  port: ${SERVER_PORT:8085}
