@@ -42,4 +42,4 @@ userauth:
 
 server:
   forward-headers-strategy: framework
-  port: ${SERVER_PORT:8090}
+  port: ${SERVER_PORT:8095}

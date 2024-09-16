@@ -101,7 +101,7 @@ public class AuthController {
         String passEncode = encoder.encode(signUpRequest.getPassword());
         User user = userService.registerUser(signUpRequest, passEncode);
         userService.save(user);
-        return ResponseEntity.ok(new MessageResponse("User: " + user.getName() + " successfully registered"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponse("User: " + user.getName() + " successfully registered"));
     }
 
     @PostMapping("/signout")
