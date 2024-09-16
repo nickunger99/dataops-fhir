@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @ToString
-public class Patient {
+public class PatientData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,5 +21,6 @@ public class Patient {
     private String tel;
     private String country;
     private String observation;
+    @Setter
     private Boolean fhirServer;
 }
