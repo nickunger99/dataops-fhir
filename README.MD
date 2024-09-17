@@ -13,11 +13,11 @@ Este repositório contém serviços para operações de DataOps no contexto FHIR
 
 ## Funcionalidades
 
-- Criação dos serviços: `fhir`, `postgres`, `consumer-dataops1`, `consumer-dataops2`, `api-dataops`
+- Criação dos serviços: (HAPI FHIR R4 Server) `fhir`, `postgres`, `consumer-dataops1`, `consumer-dataops2`, `api-dataops`
 
 - api-datops:
-    - endpoints de autenticação e autorização
-    - endpoint de upload do csv e armazena os dados no banco `dataops`
+    - endpoints de autenticação e autorização;
+    - endpoint de upload do csv e armazena os dados no banco `dataops`.
 
 - consumer-dataops:
     - job rodando a cada minuto para buscar dados dos pacientes com o atributo `fhir_server = false`, isso significa que os dados não foram enviados ainda ao servidor `FHIR`. Após o envio para o servidor `fhir`, o atributo atualiza para true;
@@ -65,6 +65,10 @@ Inicie o docker compose do projeto
 ```
 
 ## Documentação da API
+
+`http://localhost:8095/docs` Swagger DataOps API
+`http://localhost:8080/fhir/swagger-ui/` Swagger FHIR API
+
 
 #### Registro de usuário
 
