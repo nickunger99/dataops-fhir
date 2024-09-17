@@ -25,20 +25,23 @@ public class PatientService {
             String[] line;
             CsvToBean<RegisterPatient> csvToBean = new CsvToBeanBuilder<RegisterPatient>(reader)
                     .withType(RegisterPatient.class)
-                    .withIgnoreLeadingWhiteSpace(true)
+                    .withIgnoreLeadingWhiteSpace(true).withIgnoreEmptyLine(true)
                     .build();
             List<RegisterPatient> registerPatients = csvToBean.parse();
             for (RegisterPatient registerPatient : registerPatients) {
                 boolean patientExists = patientRepository.existsByCpf(registerPatient.getCpf());
 
                 if (!patientExists) {
+                    if (registerPatient.getName().isEmpty()) {
+                        continue;
+                    }
                     Patient patient = new Patient(registerPatient);
                     patientRepository.save(patient);
                     logger.info("Patient Saved: {}", patient.getName());
                 }
             }
         } catch (Exception e) {
-            throw new Exception("Error processing CSV file", e.getCause());
+            throw new Exception("Error processing CSV file", e);
         }
     }
 }
