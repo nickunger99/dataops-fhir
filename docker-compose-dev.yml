@@ -2,7 +2,7 @@ name: dataops-fhir
 
 services:
   fhir:
-    container_name: hapi_fhir
+    container_name: fhir
     image: hapiproject/hapi:v7.4.0
     ports:
       - "8080:8080"
@@ -15,12 +15,14 @@ services:
         target: /app/config/application.yaml
     depends_on:
       - postgres
+    networks:
+      - dataops-network
 
   postgres:
     build: ./db
-#    image: postgres:16.2
+    #    image: postgres:16.2
     restart: always
-    container_name: postgres
+    hostname: postgres
     environment:
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin
@@ -30,6 +32,53 @@ services:
       - "5434:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - dataops-network
+
+  api-dataops:
+    container_name: api-dataops
+    build:
+      context: ./api
+    environment:
+      - DB_URL=jdbc:postgresql://postgres:5432/dataops
+      - DB_USERNAME=admin
+      - DB_PASSWORD=admin
+    ports:
+      - 8095:8080
+    depends_on:
+      - postgres
+    networks:
+      - dataops-network
+
+  consumer-dataops1:
+    container_name: consumer-dataops1
+    build:
+      context: ./consumerFhir
+    environment:
+      - FHIR_SERVER=http://fhir:8080/fhir
+      - DB_URL=jdbc:postgresql://postgres:5432/dataops
+      - DB_USERNAME=admin
+      - DB_PASSWORD=admin
+    depends_on:
+      - postgres
+      - fhir
+    networks:
+      - dataops-network
+
+  consumer-dataops2:
+    container_name: consumer-dataops2
+    build:
+      context: ./consumerFhir
+    environment:
+      - FHIR_SERVER=http://fhir:8080/fhir
+      - DB_URL=jdbc:postgresql://postgres:5432/dataops
+      - DB_USERNAME=admin
+      - DB_PASSWORD=admin
+    depends_on:
+      - postgres
+      - fhir
+    networks:
+      - dataops-network
 
 volumes:
   postgres_data:
@@ -37,3 +86,7 @@ volumes:
 configs:
   hapi:
     file: ./hapi.application.yaml
+
+networks:
+  dataops-network:
+    driver: bridge

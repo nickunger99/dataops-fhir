@@ -36,7 +36,7 @@ public class ConsumerJob {
     @Autowired
     private TransactionTemplate transactionManager;
 
-    @Scheduled(fixedDelay = ONE_MINUTE)
+    @Scheduled(initialDelay = ONE_MINUTE, fixedDelay = ONE_MINUTE)
     public void execute() {
         logger.info("Checking patient data to send to fhir server...");
         boolean pending = true;

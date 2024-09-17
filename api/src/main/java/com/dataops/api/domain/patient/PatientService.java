@@ -1,8 +1,11 @@
 package com.dataops.api.domain.patient;
 
+import com.dataops.api.DataOpsApiApplication;
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +16,7 @@ import java.util.List;
 
 @Service
 public class PatientService {
-
+    private static Logger logger = LoggerFactory.getLogger(PatientService.class);
     @Autowired
     private PatientRepository patientRepository;
 
@@ -26,9 +29,12 @@ public class PatientService {
                     .build();
             List<RegisterPatient> registerPatients = csvToBean.parse();
             for (RegisterPatient registerPatient : registerPatients) {
-                if (!patientRepository.existsByCpf(registerPatient.getCpf())) {
+                boolean patientExists = patientRepository.existsByCpf(registerPatient.getCpf());
+
+                if (!patientExists) {
                     Patient patient = new Patient(registerPatient);
                     patientRepository.save(patient);
+                    logger.info("Patient Saved: {}", patient.getName());
                 }
             }
         } catch (Exception e) {

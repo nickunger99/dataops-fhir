@@ -24,6 +24,9 @@ spring:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
 
+fhir:
+  url: ${FHIR_SERVER:http://localhost:8080/fhir}
+
 server:
   forward-headers-strategy: framework
   port: ${SERVER_PORT:8070}
