@@ -66,8 +66,9 @@ Inicie o docker compose do projeto
 
 ## Documentação da API
 
-`http://localhost:8095/docs` Swagger DataOps API
-`http://localhost:8080/fhir/swagger-ui/` Swagger FHIR API
+Swagger DataOps API: http://localhost:8095/docs
+
+Swagger FHIR API: http://localhost:8080/fhir/swagger-ui/
 
 
 #### Registro de usuário
