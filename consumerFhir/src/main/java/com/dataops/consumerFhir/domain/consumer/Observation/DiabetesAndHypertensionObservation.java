@@ -19,7 +19,7 @@ public class DiabetesAndHypertensionObservation {
                 "mg/dL"
         );
         client.create().resource(glucoseObservation).execute();
-        logger.info("Observation: {} Blood Glucose para Diabético | Hipertenso created!", patientId);
+        logger.info("Observation: {} Blood Glucose to Diabetic | Hypertension created!", patientId);
 
         // Pressão arterial sistólica
         Observation systolicPressureObservation = CreateObservation.createObservation(
@@ -30,7 +30,7 @@ public class DiabetesAndHypertensionObservation {
                 "mmHg"
         );
         client.create().resource(systolicPressureObservation).execute();
-        logger.info("Observation: {} Systolic Blood Pressure para Diabético | Hipertenso created!", patientId);
+        logger.info("Observation: {} Systolic Blood Pressure to Diabetic | Hypertension created!", patientId);
 
         // Pressão arterial diastólica
         Observation diastolicPressureObservation = CreateObservation.createObservation(
@@ -41,7 +41,7 @@ public class DiabetesAndHypertensionObservation {
                 "mmHg"
         );
         client.create().resource(diastolicPressureObservation).execute();
-        logger.info("Observation: {} Diastolic Blood Pressure para Diabético | Hipertenso created!", patientId);
+        logger.info("Observation: {} Diastolic Blood Pressure to Diabetic | Hypertension created!", patientId);
         return glucoseObservation;
     }
 }

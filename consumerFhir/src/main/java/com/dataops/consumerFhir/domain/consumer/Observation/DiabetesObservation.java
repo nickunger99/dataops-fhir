@@ -18,7 +18,7 @@ public class DiabetesObservation {
                 "mg/dL"
         );
         client.create().resource(glucoseObservation).execute();
-        logger.info("Patient ID: {} Observation de Blood Glucose para Diabético created!", patientId);
+        logger.info("Patient ID: {} Observation de Blood Glucose to Diabetic created!", patientId);
         return glucoseObservation;
     }
 }
