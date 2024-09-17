@@ -1,6 +1,5 @@
 name: dataops-fhir
 
-
 services:
   fhir:
     container_name: hapi_fhir
@@ -18,7 +17,8 @@ services:
       - postgres
 
   postgres:
-    image: postgres:16.2
+    build: ./db
+#    image: postgres:16.2
     restart: always
     container_name: postgres
     environment:
@@ -29,8 +29,10 @@ services:
     ports:
       - "5434:5432"
     volumes:
-      - /var/lib/postgresql/data
-      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
 
 configs:
   hapi:
