@@ -20,15 +20,15 @@ public class PatientController {
     @PostMapping(path = "upload-csv", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR') or hasRole('USER')")
     public ResponseEntity uploadCSV(
-            @RequestParam("csv") @RequestPart(required = true)  MultipartFile csv) {
+            @RequestParam("csv") @RequestPart(required = true) MultipartFile csv) {
         if (csv.isEmpty()) {
-          return ResponseEntity.badRequest().body(new MessageResponse("CSV is empty"));
+            return ResponseEntity.badRequest().body(new MessageResponse("CSV is empty"));
         }
-        try  {
+        try {
             patientService.savePatientFromCSV(csv);
             return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponse("CSV processed and patients saved"));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Error processing CSV file"));
         }
     }
 }

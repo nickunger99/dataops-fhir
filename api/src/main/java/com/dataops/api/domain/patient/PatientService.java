@@ -1,6 +1,6 @@
 package com.dataops.api.domain.patient;
 
-import com.dataops.api.DataOpsApiApplication;
+import com.dataops.api.domain.ValidatorException;
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -41,7 +41,7 @@ public class PatientService {
                 }
             }
         } catch (Exception e) {
-            throw new Exception("Error processing CSV file", e);
+            throw new ValidatorException("Error processing CSV file");
         }
     }
 }
