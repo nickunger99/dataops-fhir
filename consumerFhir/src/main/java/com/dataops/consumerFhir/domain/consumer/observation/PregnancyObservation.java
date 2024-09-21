@@ -1,4 +1,4 @@
-package com.dataops.consumerFhir.domain.consumer.Observation;
+package com.dataops.consumerFhir.domain.consumer.observation;
 
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import com.dataops.consumerFhir.domain.consumer.CreateObservation;

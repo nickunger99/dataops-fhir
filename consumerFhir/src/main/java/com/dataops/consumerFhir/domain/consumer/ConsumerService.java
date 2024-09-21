@@ -2,7 +2,7 @@ package com.dataops.consumerFhir.domain.consumer;
 
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
-import com.dataops.consumerFhir.domain.consumer.Observation.*;
+import com.dataops.consumerFhir.domain.consumer.observation.*;
 import com.dataops.consumerFhir.domain.patient.PatientData;
 import org.hl7.fhir.r4.model.*;
 import org.slf4j.Logger;

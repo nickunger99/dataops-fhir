@@ -1,4 +1,4 @@
-package com.dataops.consumerFhir.domain.consumer.Observation;
+package com.dataops.consumerFhir.domain.consumer.observation;
 
 public enum TypeObservation {
     PREGNANCY("Gestante"),
