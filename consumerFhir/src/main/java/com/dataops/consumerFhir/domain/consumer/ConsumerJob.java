@@ -28,6 +28,9 @@ public class ConsumerJob {
     private PatientService patientService;
 
     @Autowired
+    private ConsumerService consumerService;
+
+    @Autowired
     private TransactionTemplate transactionManager;
 
     @Scheduled(initialDelay = ONE_MINUTE, fixedDelay = ONE_MINUTE)
@@ -47,7 +50,7 @@ public class ConsumerJob {
         }
 
         patientDataList.forEach(patientData -> {
-            ConsumerService.sendToFhir(patientData, fhirClient);
+            consumerService.sendToFhir(patientData, fhirClient);
             patientData.setFhirServer(true);
             patientService.save(patientData);
         });

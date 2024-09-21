@@ -5,11 +5,18 @@ import com.dataops.consumerFhir.domain.consumer.CreateObservation;
 import org.hl7.fhir.r4.model.Observation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-public class HypertensionObservation {
+import java.util.Objects;
+
+@Component
+public class HypertensionObservation implements ObservationResource{
     private static final Logger logger = LoggerFactory.getLogger(HypertensionObservation.class);
 
-    public static Observation create(IGenericClient client, String patientId) {
+    public Observation create(IGenericClient client, String patientId, String observation) {
+        if (!Objects.equals(observation, TypeObservation.HYPERTENSION.label)) {
+            return null;
+        }
         // Pressão arterial sistólica
         Observation systolicPressureObservation = CreateObservation.createObservation(
                 patientId,

@@ -5,11 +5,18 @@ import com.dataops.consumerFhir.domain.consumer.CreateObservation;
 import org.hl7.fhir.r4.model.Observation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-public class PregnancyAndDiabetesObservation {
+import java.util.Objects;
+
+@Component
+public class PregnancyAndDiabetesObservation implements ObservationResource {
     private static final Logger logger = LoggerFactory.getLogger(PregnancyAndDiabetesObservation.class);
 
-    public static Observation create(IGenericClient client, String patientId) {
+    public Observation create(IGenericClient client, String patientId, String observation) {
+        if (!Objects.equals(observation, TypeObservation.PREGNANCYDIABETES.label)) {
+            return null;
+        }
         // Batimentos cardíacos fetais
         Observation fetalHeartRateObservation = CreateObservation.createObservation(
                 patientId,

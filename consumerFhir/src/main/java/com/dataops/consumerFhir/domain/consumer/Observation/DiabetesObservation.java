@@ -5,11 +5,18 @@ import com.dataops.consumerFhir.domain.consumer.CreateObservation;
 import org.hl7.fhir.r4.model.Observation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-public class DiabetesObservation {
+import java.util.Objects;
+
+@Component
+public class DiabetesObservation implements ObservationResource{
     private static final Logger logger = LoggerFactory.getLogger(DiabetesObservation.class);
 
-    public static Observation create(IGenericClient client, String patientId) {
+    public  Observation create(IGenericClient client, String patientId, String observation) {
+        if (!Objects.equals(observation, TypeObservation.DIABETES.label)) {
+            return null;
+        }
         Observation glucoseObservation = CreateObservation.createObservation(
                 patientId,
                 "2339-0", // Código LOINC para glicose no sangue
